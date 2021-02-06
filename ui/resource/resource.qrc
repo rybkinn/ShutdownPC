@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="btn">
+    <file>stop.png</file>
+    <file>play.png</file>
+    <file>minus_badged_delete_remove_icon_142925.png</file>
+    <file>close_win.png</file>
+  </qresource>
+</RCC>
