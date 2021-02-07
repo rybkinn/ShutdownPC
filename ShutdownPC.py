@@ -690,20 +690,25 @@ class Ui_MainWindow(object):
         self.label_8.setText(_translate("MainWindow", "Можно закрывать программу"))
         self.label_bottom.setText(_translate("MainWindow", "By: Rybkin N. I."))
 
-    #     def moveWindow(event):
-    #         if event.buttons() == QtCore.Qt.LeftButton:
-    #             MainWindow.move(MainWindow.pos() + event.globalPos() - MainWindow.dragPos)
-    #             MainWindow.dragPos = event.globalPos()
-    #             event.accept()
-    #
-    # def mousePressEvent(self, event):
-    #     MainWindow.dragPos = event.globalPos()
+
+class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.dragPos = QtCore.QPoint()
+
+    def mousePressEvent(self, event):
+        self.dragPos = event.globalPos()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == QtCore.Qt.LeftButton:
+            self.move(self.pos() + event.globalPos() - self.dragPos)
+            self.dragPos = event.globalPos()
+            event.accept()
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    ShutdownPC = Ui_ShutdownPC()
+    ShutdownPC.show()
     sys.exit(app.exec_())
