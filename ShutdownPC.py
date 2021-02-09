@@ -46,18 +46,30 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
     def StartTimer(self):
         if self.spinBox.value() == 0:
             self.spinBox.setValue(1)
+        if self.checkBox.isChecked():
+            shutdown_time = self.timeEdit_2.time()
+            shutdown_date = self.timeEdit.dateTime().date()
+            if shutdown_time < self.timeEdit.time() or self.spinBox.value() == 1440:
+                shutdown_date = self.timeEdit.dateTime().date().addDays(1)
+            os.system('SCHTASKS /Create /SC ONCE /TN ShutdownPC /TR "shutdown -s -f" /ST {0} /SD {1} /F'.format(shutdown_time.toString('hh:mm'), shutdown_date.toString('dd.MM.yyyy')))
+            self.label_4.setText("Можно закрыть программу")
+        else:
+            self.label_4.setText("Можно свернуть программу")
         self.pushButton_2.setEnabled(False)
         self.pushButton_4.setEnabled(True)
         self.frame_3.hide()
         self.frame_7.show()
         self.spinBox.setReadOnly(True)
-        self.label_4.setText("Можно свернуть программу")
         self.label_4.show()
+        self.checkBox.setEnabled(False)
         self.timer_started = True
         self.timer2.start(1000)
         self.shutdown_timer = self.dateEdit_2.time().addSecs(self.spinBox.value() * 60)
 
     def StopTimer(self):
+        if self.checkBox.isChecked():
+            os.system('SCHTASKS /Delete /TN ShutdownPC /F')
+        self.checkBox.setEnabled(True)
         self.current_time_sec = 0
         self.timer_started = False
         self.timer2.stop()
@@ -66,12 +78,10 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         self.frame_7.hide()
         self.frame_3.show()
         self.label_4.hide()
-        print("Stop")
 
     def timerFunc(self):
         self.current_time_sec += 1
-        print(str(self.current_time_sec) + " | " + str(self.spinBox.text()))
-        if self.current_time_sec == 60:
+        if self.current_time_sec == 3:
             set_value = int(self.spinBox.text().split(' ')[0]) - 1
             self.spinBox.setValue(set_value)
             self.current_time_sec = 0
@@ -84,9 +94,8 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.frame_3.show()
                 self.spinBox.setReadOnly(False)
                 self.label_4.hide()
-
-                print("Shutdown PC")
-                # os.system("shutdown -s -f")
+                if not self.checkBox.isChecked():
+                    os.system("shutdown -s -f")
 
     def showTime(self):
         self.timeEdit.setDateTime(QtCore.QDateTime.currentDateTime())
