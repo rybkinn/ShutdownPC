@@ -32,7 +32,7 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.pushButton.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(1))
         self.pushButton_2.clicked.connect(self.StartTimer)
-        self.pushButton_3.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(2))
+        # self.pushButton_3.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(2))
         self.pushButton_4.clicked.connect(self.StopTimer)
         self.btn_close.clicked.connect(self.close)
         self.btn_minimize.clicked.connect(self.showMinimized)
@@ -81,7 +81,7 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def timerFunc(self):
         self.current_time_sec += 1
-        if self.current_time_sec == 3:
+        if self.current_time_sec == 60:
             set_value = int(self.spinBox.text().split(' ')[0]) - 1
             self.spinBox.setValue(set_value)
             self.current_time_sec = 0
