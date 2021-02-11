@@ -48,6 +48,7 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
             query_task = subprocess.check_output(['SCHTASKS', '/Query',
                                                   '/FO', 'LIST',
                                                   '/TN', 'ShutdownPC'],
+                                                 shell=True,
                                                  stdin=subprocess.PIPE,
                                                  stderr=subprocess.PIPE).decode('cp866')
             result_query_list = query_task.split('\r\n')
@@ -90,7 +91,7 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
             subprocess.Popen(['SCHTASKS', '/Create',
                               '/SC', 'ONCE',
                               '/TN', 'ShutdownPC',
-                              '/TR', 'shutdown -s -f',
+                              '/TR', 'shutdown -s -t 0 -f -d p:0:0',
                               '/ST', shutdown_time.toString('hh:mm'),
                               '/SD', shutdown_date.toString('dd.MM.yyyy'),
                               '/F'],
@@ -150,7 +151,7 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.spinBox.setReadOnly(False)
                 self.label_4.hide()
                 if not self.checkBox.isChecked():
-                    subprocess.run(['shutdown', '-s', '-f'],
+                    subprocess.run(['shutdown', '-s', '-t', '0', '-f', '-d', 'p:0:0'],
                                    stdin=subprocess.PIPE,
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE)
