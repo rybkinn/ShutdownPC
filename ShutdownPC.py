@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import os
+import subprocess
 from PyQt5 import QtCore, QtGui, QtWidgets
 import py.resource_rc
 from py.main import Ui_MainWindow
@@ -19,6 +19,7 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         self.timer.timeout.connect(self.showTime)
         self.timer.start(1000)
 
+        self.old_task = False
         self.current_time_sec = 0
         self.timer_started = False
         self.pushButton_4.setEnabled(False)
@@ -43,6 +44,41 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         # self.setWindowFlags(QtCore.Qt.CustomizeWindowHint)    # изменение размера окна
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
+        try:
+            query_task = subprocess.check_output(['SCHTASKS', '/Query',
+                                                  '/FO', 'LIST',
+                                                  '/TN', 'ShutdownPC'],
+                                                 stdin=subprocess.PIPE,
+                                                 stderr=subprocess.PIPE).decode('cp866')
+            result_query_list = query_task.split('\r\n')
+            for elem in result_query_list:
+                if elem.startswith('Время следующего запуска:'):
+                    task_time_result = elem[26:].split(' ')
+                    if not task_time_result[0] == 'N/A':
+                        if len(task_time_result[1]) == 7:
+                            task_time_result[1] = '0' + task_time_result[1]
+                        self.TaskDate = QtCore.QDate()
+                        self.TaskDate.setDate(int(task_time_result[0][6:]), int(task_time_result[0][3:5]),
+                                              int(task_time_result[0][:2]))
+                        self.TaskTime = QtCore.QTime()
+                        self.TaskTime.setHMS(int(task_time_result[1][:2]), int(task_time_result[1][3:5]),
+                                             int(task_time_result[1][6:]))
+                        self.timer_started = True
+                        self.checkBox.setEnabled(False)
+                        self.pushButton_2.setEnabled(False)
+                        self.pushButton_4.setEnabled(True)
+                        self.spinBox.setReadOnly(True)
+                        self.spinBox.hide()
+                        self.checkBox.hide()
+                        self.label_2.setText("Есть задача в планировщике")
+                        self.frame_3.hide()
+                        self.frame_7.show()
+                        self.label_4.show()
+                        self.timeEdit_2.setTime(self.TaskTime)
+                        self.old_task = True
+        except subprocess.CalledProcessError:
+            pass
+
     def StartTimer(self):
         if self.spinBox.value() == 0:
             self.spinBox.setValue(1)
@@ -51,7 +87,17 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
             shutdown_date = self.timeEdit.dateTime().date()
             if shutdown_time < self.timeEdit.time() or self.spinBox.value() == 1440:
                 shutdown_date = self.timeEdit.dateTime().date().addDays(1)
-            os.system('SCHTASKS /Create /SC ONCE /TN ShutdownPC /TR "shutdown -s -f" /ST {0} /SD {1} /F'.format(shutdown_time.toString('hh:mm'), shutdown_date.toString('dd.MM.yyyy')))
+            subprocess.Popen(['SCHTASKS', '/Create',
+                              '/SC', 'ONCE',
+                              '/TN', 'ShutdownPC',
+                              '/TR', 'shutdown -s -f',
+                              '/ST', shutdown_time.toString('hh:mm'),
+                              '/SD', shutdown_date.toString('dd.MM.yyyy'),
+                              '/F'],
+                             shell=True,
+                             stdin=subprocess.PIPE,
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
             self.label_4.setText("Можно закрыть программу")
         else:
             self.label_4.setText("Можно свернуть программу")
@@ -67,8 +113,14 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         self.shutdown_timer = self.dateEdit_2.time().addSecs(self.spinBox.value() * 60)
 
     def StopTimer(self):
-        if self.checkBox.isChecked():
-            os.system('SCHTASKS /Delete /TN ShutdownPC /F')
+        if self.checkBox.isChecked() or self.old_task:
+            subprocess.Popen(['SCHTASKS', '/Delete',
+                              '/TN', 'ShutdownPC',
+                              '/F'],
+                             shell=True,
+                             stdin=subprocess.PIPE,
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
         self.checkBox.setEnabled(True)
         self.current_time_sec = 0
         self.timer_started = False
@@ -78,6 +130,9 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         self.frame_7.hide()
         self.frame_3.show()
         self.label_4.hide()
+        self.spinBox.show()
+        self.checkBox.show()
+        self.label_2.setText("Выключить через")
 
     def timerFunc(self):
         self.current_time_sec += 1
@@ -95,7 +150,10 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.spinBox.setReadOnly(False)
                 self.label_4.hide()
                 if not self.checkBox.isChecked():
-                    os.system("shutdown -s -f")
+                    subprocess.run(['shutdown', '-s', '-f'],
+                                   stdin=subprocess.PIPE,
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE)
 
     def showTime(self):
         self.timeEdit.setDateTime(QtCore.QDateTime.currentDateTime())
