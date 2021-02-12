@@ -1,8 +1,11 @@
 <RCC>
   <qresource prefix="btn">
-    <file>stop.png</file>
-    <file>play.png</file>
-    <file>minus_badged_delete_remove_icon_142925.png</file>
-    <file>close_win.png</file>
+    <file>img/close_win.png</file>
+    <file>img/minimize_win.png</file>
+    <file>img/play.png</file>
+    <file>img/stop.png</file>
+  </qresource>
+  <qresource prefix="fonts">
+    <file>fonts/a_LCDNova.ttf</file>
   </qresource>
 </RCC>

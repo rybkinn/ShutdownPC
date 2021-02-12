@@ -244,7 +244,7 @@ QPushButton:hover {
                </property>
                <property name="icon">
                 <iconset resource="resource/resource.qrc">
-                 <normaloff>:/btn/minus_badged_delete_remove_icon_142925.png</normaloff>:/btn/minus_badged_delete_remove_icon_142925.png</iconset>
+                 <normaloff>:/btn/img/minimize_win.png</normaloff>:/btn/img/minimize_win.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
@@ -283,12 +283,12 @@ QPushButton:hover {
                </property>
                <property name="icon">
                 <iconset resource="resource/resource.qrc">
-                 <normaloff>:/btn/close_win.png</normaloff>:/btn/close_win.png</iconset>
+                 <normaloff>:/btn/img/close_win.png</normaloff>:/btn/img/close_win.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
-                 <width>35</width>
-                 <height>35</height>
+                 <width>38</width>
+                 <height>38</height>
                 </size>
                </property>
                <property name="autoDefault">
@@ -1080,7 +1080,7 @@ QPushButton:hover {
                       </property>
                       <property name="icon">
                        <iconset resource="resource/resource.qrc">
-                        <normaloff>:/btn/play.png</normaloff>:/btn/play.png</iconset>
+                        <normaloff>:/btn/img/play.png</normaloff>:/btn/img/play.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -1170,7 +1170,7 @@ QPushButton:hover {
                       </property>
                       <property name="icon">
                        <iconset resource="resource/resource.qrc">
-                        <normaloff>:/btn/stop.png</normaloff>:/btn/stop.png</iconset>
+                        <normaloff>:/btn/img/stop.png</normaloff>:/btn/img/stop.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -1682,7 +1682,7 @@ QPushButton:hover {
                        <string>Запуск</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="resource/resource.qrc">
+                       <iconset>
                         <normaloff>:/btn/play.png</normaloff>:/btn/play.png</iconset>
                       </property>
                       <property name="iconSize">
