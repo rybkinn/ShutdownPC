@@ -578,7 +578,7 @@ QPushButton:hover {
                        </font>
                       </property>
                       <property name="cursor">
-                       <cursorShape>ForbiddenCursor</cursorShape>
+                       <cursorShape>PointingHandCursor</cursorShape>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">QPushButton {
@@ -590,7 +590,7 @@ QPushButton:hover {
 }</string>
                       </property>
                       <property name="text">
-                       <string>На время</string>
+                       <string>На дату</string>
                       </property>
                      </widget>
                     </item>
@@ -1682,8 +1682,8 @@ QPushButton:hover {
                        <string>Запуск</string>
                       </property>
                       <property name="icon">
-                       <iconset>
-                        <normaloff>:/btn/play.png</normaloff>:/btn/play.png</iconset>
+                       <iconset resource="resource/resource.qrc">
+                        <normaloff>:/btn/img/play.png</normaloff>:/btn/img/play.png</iconset>
                       </property>
                       <property name="iconSize">
                        <size>
@@ -1695,6 +1695,93 @@ QPushButton:hover {
                     </item>
                     <item>
                      <spacer name="horizontalSpacer_22">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_11">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_14">
+                    <item>
+                     <spacer name="horizontalSpacer_25">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="pushButton_7">
+                      <property name="minimumSize">
+                       <size>
+                        <width>300</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <family>a_LCDNova</family>
+                        <pointsize>14</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
+                      <property name="layoutDirection">
+                       <enum>Qt::RightToLeft</enum>
+                      </property>
+                      <property name="autoFillBackground">
+                       <bool>false</bool>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QPushButton {
+	background-color: rgb(20, 20, 20);
+	color: rgb(152, 220, 41);
+}
+QPushButton:hover {
+	background-color: rgba(50, 50, 50, 150);
+}</string>
+                      </property>
+                      <property name="text">
+                       <string>Остановить</string>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="resource/resource.qrc">
+                        <normaloff>:/btn/img/stop.png</normaloff>:/btn/img/stop.png</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>29</width>
+                        <height>29</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_26">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
@@ -1739,25 +1826,63 @@ QPushButton:hover {
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="label_8">
-                   <property name="font">
-                    <font>
-                     <family>a_LCDNova</family>
-                     <pointsize>10</pointsize>
-                     <weight>75</weight>
-                     <bold>true</bold>
-                     <underline>true</underline>
-                    </font>
+                  <widget class="QFrame" name="frame_12">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
                    </property>
-                   <property name="styleSheet">
-                    <string notr="true">color: rgb(255, 0, 0);</string>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
                    </property>
-                   <property name="text">
-                    <string>Можно закрывать программу</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_15">
+                    <item>
+                     <spacer name="horizontalSpacer_15">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>126</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_8">
+                      <property name="font">
+                       <font>
+                        <family>a_LCDNova</family>
+                        <pointsize>10</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                        <underline>true</underline>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(255, 0, 0);</string>
+                      </property>
+                      <property name="text">
+                       <string>Можно закрывать программу</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_16">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>125</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
                   </widget>
                  </item>
                 </layout>

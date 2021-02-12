@@ -19,9 +19,11 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         self.timer.timeout.connect(self.showTime)
         self.timer.start(1000)
 
+        self.spinBox.setSuffix(' мин')
         self.old_task = False
         self.current_time_sec = 0
         self.timer_started = False
+        self.date_timer_started = False
         self.pushButton_4.setEnabled(False)
         self.spinBox.setValue(1)
         self.dateEdit_2.setDateTime(QtCore.QDateTime.currentDateTime())
@@ -31,10 +33,17 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         self.timer2 = QtCore.QTimer(self)
         self.timer2.timeout.connect(self.timerFunc)
 
+        self.pushButton_7.setEnabled(False)
+        self.frame_11.hide()
+        self.label_8.hide()
+        self.dateTimeEdit.setDateTime(QtCore.QDateTime.currentDateTime().addSecs(60))
+
         self.pushButton.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(1))
         self.pushButton_2.clicked.connect(self.StartTimer)
-        # self.pushButton_3.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(2))
+        self.pushButton_3.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(2))
         self.pushButton_4.clicked.connect(self.StopTimer)
+        self.pushButton_6.clicked.connect(self.StartDateTimer)
+        self.pushButton_7.clicked.connect(self.StopDateTimer)
         self.btn_close.clicked.connect(self.close)
         self.btn_minimize.clicked.connect(self.showMinimized)
 
@@ -77,6 +86,18 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
                         self.label_4.show()
                         self.timeEdit_2.setTime(self.TaskTime)
                         self.old_task = True
+
+                        self.label_5.setText("Есть задача в планировщике")
+                        self.frame_10.hide()
+                        self.frame_11.show()
+                        self.dateTimeEdit.setEnabled(False)
+                        self.pushButton_6.setEnabled(False)
+                        self.pushButton_7.setEnabled(True)
+                        self.label_8.show()
+                        self.checkBox_2.hide()
+                        self.dateTimeEdit.setDate(self.TaskDate)
+                        self.dateTimeEdit.setTime(self.TaskTime)
+
         except subprocess.CalledProcessError:
             pass
 
@@ -135,6 +156,56 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         self.checkBox.show()
         self.label_2.setText("Выключить через")
 
+    def StartDateTimer(self):
+        self.pushButton_6.setEnabled(False)
+        self.pushButton_7.setEnabled(True)
+        self.checkBox_2.setEnabled(False)
+        self.dateTimeEdit.setEnabled(False)
+        self.frame_10.hide()
+        self.frame_11.show()
+        self.label_8.show()
+        self.date_timer_started = True
+        if self.checkBox_2.isChecked():
+            self.label_8.setText("Можно закрыть программу")
+            shutdown_date = self.dateTimeEdit.dateTime()
+            subprocess.Popen(['SCHTASKS', '/Create',
+                              '/SC', 'ONCE',
+                              '/TN', 'ShutdownPC',
+                              '/TR', 'shutdown -s -t 0 -f -d p:0:0',
+                              '/ST', shutdown_date.toString('hh:mm'),
+                              '/SD', shutdown_date.toString('dd.MM.yyyy'),
+                              '/F'],
+                             shell=True,
+                             stdin=subprocess.PIPE,
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
+        else:
+            self.label_8.setText("Можно свернуть программу")
+
+    def StopDateTimer(self):
+        self.label_5.setText("Выключить в")
+        self.pushButton_6.setEnabled(True)
+        self.pushButton_7.setEnabled(False)
+        self.checkBox_2.setEnabled(True)
+        self.dateTimeEdit.setEnabled(True)
+        self.checkBox_2.show()
+        self.frame_10.show()
+        self.frame_11.hide()
+        self.label_8.hide()
+        self.date_timer_started = False
+        if self.checkBox_2.isChecked() or self.old_task:
+            self.old_task = False
+            subprocess.Popen(['SCHTASKS', '/Delete',
+                              '/TN', 'ShutdownPC',
+                              '/F'],
+                             shell=True,
+                             stdin=subprocess.PIPE,
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
+            self.dateTimeEdit.setDateTime(QtCore.QDateTime.currentDateTime().addSecs(60))
+        else:
+            pass
+
     def timerFunc(self):
         self.current_time_sec += 1
         if self.current_time_sec == 60:
@@ -162,6 +233,24 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         self.dateEdit_2.setDateTime(QtCore.QDateTime.currentDateTime())
         if not self.timer_started:
             self.timeEdit_2.setDateTime(QtCore.QDateTime.currentDateTime().addSecs(self.spinBox.value() * 60))
+        if self.dateEdit.dateTime() > self.dateTimeEdit.dateTime():
+            self.pushButton_6.setStyleSheet("QPushButton {\n"
+                                            "color: rgb(255, 0, 0);\n"
+                                            "background-color: rgb(10, 10, 10);\n"
+                                            "}\n"
+                                            "QPushButton:hover {\n"
+                                            "background-color: rgba(50, 50, 50, 150);\n"
+                                            "}")
+            self.pushButton_6.setEnabled(False)
+        else:
+            self.pushButton_6.setStyleSheet("QPushButton {\n"
+                                            "color: rgb(152, 220, 41);\n"
+                                            "background-color: rgb(10, 10, 10);\n"
+                                            "}\n"
+                                            "QPushButton:hover {\n"
+                                            "background-color: rgba(50, 50, 50, 150);\n"
+                                            "}")
+            self.pushButton_6.setEnabled(True)
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
