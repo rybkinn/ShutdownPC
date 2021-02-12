@@ -36,7 +36,10 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton_7.setEnabled(False)
         self.frame_11.hide()
         self.label_8.hide()
-        self.dateTimeEdit.setDateTime(QtCore.QDateTime.currentDateTime().addSecs(60))
+        sec = 60 - QtCore.QDateTime.currentDateTime().time().second()
+        self.dateTimeEdit.setDateTime(QtCore.QDateTime.currentDateTime().addSecs(sec))
+        self.timer3 = QtCore.QTimer(self)
+        self.timer3.timeout.connect(self.startTimerDataFunc)
 
         self.pushButton.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(1))
         self.pushButton_2.clicked.connect(self.StartTimer)
@@ -181,8 +184,10 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
                              stderr=subprocess.PIPE)
         else:
             self.label_8.setText("Можно свернуть программу")
+            self.timer3.start(1000)
 
     def StopDateTimer(self):
+        self.timer3.stop()
         self.label_5.setText("Выключить в")
         self.pushButton_6.setEnabled(True)
         self.pushButton_7.setEnabled(False)
@@ -202,9 +207,8 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
                              stdin=subprocess.PIPE,
                              stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
-            self.dateTimeEdit.setDateTime(QtCore.QDateTime.currentDateTime().addSecs(60))
-        else:
-            pass
+            sec = 60 - QtCore.QDateTime.currentDateTime().time().second()
+            self.dateTimeEdit.setDateTime(QtCore.QDateTime.currentDateTime().addSecs(sec))
 
     def timerFunc(self):
         self.current_time_sec += 1
@@ -251,6 +255,14 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
                                             "background-color: rgba(50, 50, 50, 150);\n"
                                             "}")
             self.pushButton_6.setEnabled(True)
+
+    def startTimerDataFunc(self):
+        if QtCore.QDateTime.currentDateTime() >= self.dateTimeEdit.dateTime():
+            self.timer3.stop()
+            subprocess.run(['shutdown', '-s', '-t', '0', '-f', '-d', 'p:0:0'],
+                           stdin=subprocess.PIPE,
+                           stdout=subprocess.PIPE,
+                           stderr=subprocess.PIPE)
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
