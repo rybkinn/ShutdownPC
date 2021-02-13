@@ -83,13 +83,13 @@ class Ui_MainWindow(object):
         self.btn_minimize.setMinimumSize(QtCore.QSize(25, 25))
         self.btn_minimize.setMaximumSize(QtCore.QSize(25, 25))
         self.btn_minimize.setStyleSheet("QPushButton {\n"
-"    border: none;\n"
-"    border-radius: 8px;\n"
-"    background-color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgba(255, 255, 255, 150);\n"
-"}")
+                                        "border: none;\n"
+                                        "border-radius: 8px;\n"
+                                        "background-color: rgb(255, 255, 255);\n"
+                                        "}\n"
+                                        "QPushButton:hover {\n"
+                                        "background-color: rgba(255, 255, 255, 150);\n"
+                                        "}")
         self.btn_minimize.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/btn/img/minimize_win.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -101,13 +101,13 @@ class Ui_MainWindow(object):
         self.btn_close.setMinimumSize(QtCore.QSize(25, 25))
         self.btn_close.setMaximumSize(QtCore.QSize(25, 25))
         self.btn_close.setStyleSheet("QPushButton {\n"
-"    border: none;\n"
-"    border-radius: 8px;\n"
-"    background-color: rgb(255, 255, 255);\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgba(255, 255, 255, 150);\n"
-"}")
+                                     "border: none;\n"
+                                     "border-radius: 8px;\n"
+                                     "background-color: rgb(255, 255, 255);\n"
+                                     "}\n"
+                                     "QPushButton:hover {\n"
+                                     "background-color: rgba(255, 255, 255, 150);\n"
+                                     "}")
         self.btn_close.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/btn/img/close_win.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -207,12 +207,12 @@ class Ui_MainWindow(object):
         self.pushButton.setFont(font)
         self.pushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton.setStyleSheet("QPushButton {\n"
-"    color: rgb(152, 220, 41);\n"
-"    background-color: rgb(10, 10, 10);\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgba(50, 50, 50, 150);\n"
-"}")
+                                      "color: rgb(152, 220, 41);\n"
+                                      "background-color: rgb(10, 10, 10);\n"
+                                      "}\n"
+                                      "QPushButton:hover {\n"
+                                      "background-color: rgba(50, 50, 50, 150);\n"
+                                      "}")
         self.pushButton.setAutoDefault(False)
         self.pushButton.setDefault(False)
         self.pushButton.setFlat(False)
@@ -227,12 +227,12 @@ class Ui_MainWindow(object):
         self.pushButton_3.setFont(font)
         self.pushButton_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_3.setStyleSheet("QPushButton {\n"
-"    color: rgb(152, 220, 41);\n"
-"    background-color: rgb(10, 10, 10);\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgba(50, 50, 50, 150);\n"
-"}")
+                                        "color: rgb(152, 220, 41);\n"
+                                        "background-color: rgb(10, 10, 10);\n"
+                                        "}\n"
+                                        "QPushButton:hover {\n"
+                                        "background-color: rgba(50, 50, 50, 150);\n"
+                                        "}")
         self.pushButton_3.setObjectName("pushButton_3")
         self.verticalLayout_6.addWidget(self.pushButton_3)
         self.gridLayout.addWidget(self.frame, 1, 5, 1, 1)
@@ -245,7 +245,7 @@ class Ui_MainWindow(object):
         self.timeEdit.setFont(font)
         self.timeEdit.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.timeEdit.setStyleSheet("background-color: black;\n"
-"color: rgb(152, 220, 41);")
+                                    "color: rgb(152, 220, 41);")
         self.timeEdit.setWrapping(False)
         self.timeEdit.setFrame(False)
         self.timeEdit.setAlignment(QtCore.Qt.AlignCenter)
@@ -267,7 +267,7 @@ class Ui_MainWindow(object):
         font.setPointSize(10)
         self.dateEdit.setFont(font)
         self.dateEdit.setStyleSheet("background-color: black;\n"
-"color: rgb(152, 220, 41);")
+                                    "color: rgb(152, 220, 41);")
         self.dateEdit.setFrame(False)
         self.dateEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.dateEdit.setReadOnly(True)
@@ -282,7 +282,7 @@ class Ui_MainWindow(object):
         font.setPointSize(10)
         self.dateEdit_2.setFont(font)
         self.dateEdit_2.setStyleSheet("background-color: black;\n"
-"color: rgb(152, 220, 41);")
+                                      "color: rgb(152, 220, 41);")
         self.dateEdit_2.setFrame(False)
         self.dateEdit_2.setAlignment(QtCore.Qt.AlignCenter)
         self.dateEdit_2.setReadOnly(True)
@@ -336,7 +336,7 @@ class Ui_MainWindow(object):
         self.spinBox.setFont(font)
         self.spinBox.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.spinBox.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color: rgb(152, 220, 41);")
+                                   "color: rgb(152, 220, 41);")
         self.spinBox.setFrame(False)
         self.spinBox.setAlignment(QtCore.Qt.AlignCenter)
         self.spinBox.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
@@ -395,12 +395,12 @@ class Ui_MainWindow(object):
         self.pushButton_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_2.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.pushButton_2.setStyleSheet("QPushButton {\n"
-"    background-color: rgb(20, 20, 20);\n"
-"    color: rgb(152, 220, 41);\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgba(50, 50, 50, 150);\n"
-"}")
+                                        "background-color: rgb(20, 20, 20);\n"
+                                        "color: rgb(152, 220, 41);\n"
+                                        "}\n"
+                                        "QPushButton:hover {\n"
+                                        "background-color: rgba(50, 50, 50, 150);\n"
+                                        "}")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(":/btn/img/play.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_2.setIcon(icon2)
@@ -431,12 +431,12 @@ class Ui_MainWindow(object):
         self.pushButton_4.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_4.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.pushButton_4.setStyleSheet("QPushButton {\n"
-"    background-color: rgb(20, 20, 20);\n"
-"    color: rgb(152, 220, 41);\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgba(50, 50, 50, 150);\n"
-"}")
+                                        "background-color: rgb(20, 20, 20);\n"
+                                        "color: rgb(152, 220, 41);\n"
+                                        "}\n"
+                                        "QPushButton:hover {\n"
+                                        "background-color: rgba(50, 50, 50, 150);\n"
+                                        "}")
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(":/btn/img/stop.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_4.setIcon(icon3)
@@ -482,7 +482,7 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.timeEdit_2.setFont(font)
         self.timeEdit_2.setStyleSheet("background-color: black;\n"
-"color: rgb(152, 220, 41);")
+                                      "color: rgb(152, 220, 41);")
         self.timeEdit_2.setFrame(False)
         self.timeEdit_2.setAlignment(QtCore.Qt.AlignCenter)
         self.timeEdit_2.setReadOnly(True)
@@ -564,8 +564,8 @@ class Ui_MainWindow(object):
         self.dateTimeEdit.setFont(font)
         self.dateTimeEdit.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.dateTimeEdit.setStyleSheet("background-color: rgb(0, 0, 0);\n"
-"color: rgb(152, 220, 41);\n"
-"border-style: none;")
+                                        "color: rgb(152, 220, 41);\n"
+                                        "border-style: none;")
         self.dateTimeEdit.setFrame(False)
         self.dateTimeEdit.setAlignment(QtCore.Qt.AlignCenter)
         self.dateTimeEdit.setDateTime(QtCore.QDateTime(QtCore.QDate(2021, 2, 27), QtCore.QTime(14, 8, 7)))
@@ -617,12 +617,12 @@ class Ui_MainWindow(object):
         self.pushButton_6.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.pushButton_6.setAutoFillBackground(False)
         self.pushButton_6.setStyleSheet("QPushButton {\n"
-"    background-color: rgb(20, 20, 20);\n"
-"    color: rgb(152, 220, 41);\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgba(50, 50, 50, 150);\n"
-"}")
+                                        "background-color: rgb(20, 20, 20);\n"
+                                        "color: rgb(152, 220, 41);\n"
+                                        "}\n"
+                                        "QPushButton:hover {\n"
+                                        "background-color: rgba(50, 50, 50, 150);\n"
+                                        "}")
         self.pushButton_6.setIcon(icon2)
         self.pushButton_6.setIconSize(QtCore.QSize(29, 29))
         self.pushButton_6.setObjectName("pushButton_6")
@@ -650,12 +650,12 @@ class Ui_MainWindow(object):
         self.pushButton_7.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.pushButton_7.setAutoFillBackground(False)
         self.pushButton_7.setStyleSheet("QPushButton {\n"
-"    background-color: rgb(20, 20, 20);\n"
-"    color: rgb(152, 220, 41);\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgba(50, 50, 50, 150);\n"
-"}")
+                                        "background-color: rgb(20, 20, 20);\n"
+                                        "color: rgb(152, 220, 41);\n"
+                                        "}\n"
+                                        "QPushButton:hover {\n"
+                                        "background-color: rgba(50, 50, 50, 150);\n"
+                                        "}")
         self.pushButton_7.setIcon(icon3)
         self.pushButton_7.setIconSize(QtCore.QSize(29, 29))
         self.pushButton_7.setObjectName("pushButton_7")

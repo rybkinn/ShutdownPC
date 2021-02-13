@@ -53,7 +53,6 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         QtCore.QMetaObject.connectSlotsByName(self)
 
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        # self.setWindowFlags(QtCore.Qt.CustomizeWindowHint)    # изменение размера окна
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
         try:
