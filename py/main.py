@@ -784,4 +784,4 @@ class Ui_MainWindow(object):
         self.pushButton_7.setText(_translate("MainWindow", "Остановить"))
         self.label_8.setText(_translate("MainWindow", "Можно закрывать программу"))
         self.label_bottom.setText(_translate("MainWindow", "By: Rybkin N. I."))
-        self.label_bottom_2.setText(_translate("MainWindow", "v 1.0 Beta"))
+        self.label_bottom_2.setText(_translate("MainWindow", "v 1.0"))
