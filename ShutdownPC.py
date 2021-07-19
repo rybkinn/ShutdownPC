@@ -2,21 +2,23 @@
 
 import sys
 import subprocess
-from PyQt5 import QtCore, QtGui, QtWidgets
-import py.resource_rc
+from PyQt5 import QtCore
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
 from py.main import Ui_MainWindow
 
 
-class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
+class UiShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
+        QtGui.QFontDatabase.addApplicationFont("ui/resource/fonts/a_LCDNova.ttf")
         self.setupUi(self)
         self.dragPos = QtCore.QPoint()
 
         self.timeEdit.setDateTime(QtCore.QDateTime.currentDateTime())
         self.dateEdit.setDateTime(QtCore.QDateTime.currentDateTime())
         self.timer = QtCore.QTimer(self)
-        self.timer.timeout.connect(self.showTime)
+        self.timer.timeout.connect(self.show_time)
         self.timer.start(1000)
 
         self.spinBox.setSuffix(' мин')
@@ -31,7 +33,7 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         self.frame_7.hide()
         self.label_4.hide()
         self.timer2 = QtCore.QTimer(self)
-        self.timer2.timeout.connect(self.timerFunc)
+        self.timer2.timeout.connect(self.timer_func)
 
         self.pushButton_7.setEnabled(False)
         self.frame_11.hide()
@@ -39,14 +41,14 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         sec = 60 - QtCore.QDateTime.currentDateTime().time().second()
         self.dateTimeEdit.setDateTime(QtCore.QDateTime.currentDateTime().addSecs(sec))
         self.timer3 = QtCore.QTimer(self)
-        self.timer3.timeout.connect(self.startTimerDataFunc)
+        self.timer3.timeout.connect(self.start_timer_data_func)
 
         self.pushButton.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(1))
-        self.pushButton_2.clicked.connect(self.StartTimer)
+        self.pushButton_2.clicked.connect(self.start_timer)
         self.pushButton_3.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(2))
-        self.pushButton_4.clicked.connect(self.StopTimer)
-        self.pushButton_6.clicked.connect(self.StartDateTimer)
-        self.pushButton_7.clicked.connect(self.StopDateTimer)
+        self.pushButton_4.clicked.connect(self.stop_timer)
+        self.pushButton_6.clicked.connect(self.start_date_timer)
+        self.pushButton_7.clicked.connect(self.stop_date_timer)
         self.btn_close.clicked.connect(self.close)
         self.btn_minimize.clicked.connect(self.showMinimized)
 
@@ -103,7 +105,7 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         except subprocess.CalledProcessError:
             pass
 
-    def StartTimer(self):
+    def start_timer(self):
         if self.spinBox.value() == 0:
             self.spinBox.setValue(1)
         if self.checkBox.isChecked():
@@ -136,7 +138,7 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         self.timer2.start(1000)
         self.shutdown_timer = self.dateEdit_2.time().addSecs(self.spinBox.value() * 60)
 
-    def StopTimer(self):
+    def stop_timer(self):
         if self.checkBox.isChecked() or self.old_task:
             subprocess.Popen(['SCHTASKS', '/Delete',
                               '/TN', 'ShutdownPC',
@@ -158,7 +160,7 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
         self.checkBox.show()
         self.label_2.setText("Выключить через")
 
-    def StartDateTimer(self):
+    def start_date_timer(self):
         self.pushButton_6.setEnabled(False)
         self.pushButton_7.setEnabled(True)
         self.checkBox_2.setEnabled(False)
@@ -185,7 +187,7 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
             self.label_8.setText("Можно свернуть программу")
             self.timer3.start(1000)
 
-    def StopDateTimer(self):
+    def stop_date_timer(self):
         self.timer3.stop()
         self.label_5.setText("Выключить в")
         self.pushButton_6.setEnabled(True)
@@ -209,7 +211,7 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
             sec = 60 - QtCore.QDateTime.currentDateTime().time().second()
             self.dateTimeEdit.setDateTime(QtCore.QDateTime.currentDateTime().addSecs(sec))
 
-    def timerFunc(self):
+    def timer_func(self):
         self.current_time_sec += 1
         if self.current_time_sec == 60:
             set_value = int(self.spinBox.text().split(' ')[0]) - 1
@@ -230,7 +232,7 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE)
 
-    def showTime(self):
+    def show_time(self):
         self.timeEdit.setDateTime(QtCore.QDateTime.currentDateTime())
         self.dateEdit.setDateTime(QtCore.QDateTime.currentDateTime())
         self.dateEdit_2.setDateTime(QtCore.QDateTime.currentDateTime())
@@ -255,7 +257,7 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
                                             "}")
             self.pushButton_6.setEnabled(True)
 
-    def startTimerDataFunc(self):
+    def start_timer_data_func(self):
         if QtCore.QDateTime.currentDateTime() >= self.dateTimeEdit.dateTime():
             self.timer3.stop()
             subprocess.run(['shutdown', '-s', '-t', '0', '-f', '-d', 'p:0:0'],
@@ -275,6 +277,6 @@ class Ui_ShutdownPC(QtWidgets.QMainWindow, Ui_MainWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    ShutdownPC = Ui_ShutdownPC()
+    ShutdownPC = UiShutdownPC()
     ShutdownPC.show()
     sys.exit(app.exec_())

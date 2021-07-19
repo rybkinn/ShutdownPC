@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from PyQt5 import QtCore
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
 import py.resource_rc
-from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_MainWindow(object):
@@ -54,7 +56,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.label_title = QtWidgets.QLabel(self.frame_title)
-        QtGui.QFontDatabase.addApplicationFont(":fonts/fonts/a_LCDNova.ttf")
         font = QtGui.QFont()
         font.setFamily("a_LCDNova")
         font.setPointSize(14)
