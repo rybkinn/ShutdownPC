@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import QMessageBox
 
 from py.main import Ui_MainWindow
 
-VERSION = "v 1.1"
+VERSION = "v 1.2"
 
 
 class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -20,11 +20,15 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
         super().__init__()
         QtGui.QFontDatabase.addApplicationFont(
             "ui/resource/fonts/a_LCDNova.ttf")
+        self.icon_msg = QtGui.QIcon()
+        self.icon_msg.addPixmap(
+            QtGui.QPixmap(":/ico/img/shutdown.ico"),
+            QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.setWindowIcon(self.icon_msg)
+
         self.setupUi(self)
         self.dragPos = QtCore.QPoint()
-
         self.label_bottom_2.setText(VERSION)
-
         self.run_system = platform.system()
         if self.run_system == 'Linux':
             self.checkBox.setText('Записать в систему')
@@ -88,9 +92,9 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
                     shell=True,
                     stdin=subprocess.PIPE,
                     stderr=subprocess.PIPE).decode('cp866')
+                # there is a task
                 result_query_list = query_task.split('\r\n')
                 for task_parameter in result_query_list:
-                    print("task_parameter => ", task_parameter)
                     if task_parameter.startswith('Время следующего запуска:'):
                         task_time_result = task_parameter[26:].split(' ')
                         if not task_time_result[0] == 'N/A':
@@ -128,13 +132,9 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
                             self.checkBox_2.hide()
                             self.dateTimeEdit.setDate(self.TaskDate)
                             self.dateTimeEdit.setTime(self.TaskTime)
-            except subprocess.CalledProcessError as error:
-                msg = QMessageBox()
-                msg.setIcon(QMessageBox.Critical)
-                msg.setWindowTitle("Ошибка с планировщиком задач.")
-                msg.setText("Нету задачи в планировщике windows.")
-                msg.setInformativeText(error)
-                msg.exec_()
+            except subprocess.CalledProcessError:
+                # there is NO task
+                pass
 
     def start_timer_by_time(self):
         """
@@ -169,9 +169,10 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
                 except PermissionError as error:
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Critical)
+                    msg.setWindowIcon(self.icon_msg)
                     msg.setWindowTitle("Ошибка с root правами")
                     msg.setText("Недостаточно прав на выполнение операции")
-                    msg.setInformativeText(error)
+                    msg.setInformativeText(str(error))
                     msg.exec_()
             self.label_4.setText("Можно закрыть программу")
         else:
@@ -218,9 +219,10 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
             except PermissionError as error:
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Critical)
+                msg.setWindowIcon(self.icon_msg)
                 msg.setWindowTitle("Ошибка с root правами")
                 msg.setText("Недостаточно прав на выполнение операции")
-                msg.setInformativeText(error)
+                msg.setInformativeText(str(error))
                 msg.exec_()
         self.checkBox.setEnabled(True)
         self.current_time_sec = 0
@@ -291,9 +293,10 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
                 except PermissionError as error:
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Critical)
+                    msg.setWindowIcon(self.icon_msg)
                     msg.setWindowTitle("Ошибка с root правами")
                     msg.setText("Недостаточно прав на выполнение операции")
-                    msg.setInformativeText(error)
+                    msg.setInformativeText(str(error))
                     msg.exec_()
         else:
             self.label_8.setText("Можно свернуть программу")
@@ -348,9 +351,10 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
             except PermissionError as error:
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Critical)
+                msg.setWindowIcon(self.icon_msg)
                 msg.setWindowTitle("Ошибка с root правами")
                 msg.setText("Недостаточно прав на выполнение операции")
-                msg.setInformativeText(error)
+                msg.setInformativeText(str(error))
                 msg.exec_()
 
     def timer_operation_by_time(self):
@@ -386,9 +390,10 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
                     except PermissionError as error:
                         msg = QMessageBox()
                         msg.setIcon(QMessageBox.Critical)
+                        msg.setWindowIcon(self.icon_msg)
                         msg.setWindowTitle("Ошибка с root правами")
                         msg.setText("Недостаточно прав на выполнение операции")
-                        msg.setInformativeText(error)
+                        msg.setInformativeText(str(error))
                         msg.exec_()
 
     def timer_operation_by_date(self):
@@ -411,9 +416,10 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
             except PermissionError as error:
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Critical)
+                msg.setWindowIcon(self.icon_msg)
                 msg.setWindowTitle("Ошибка с root правами")
                 msg.setText("Недостаточно прав на выполнение операции")
-                msg.setInformativeText(error)
+                msg.setInformativeText(str(error))
                 msg.exec_()
 
     def display_time(self):
@@ -470,7 +476,12 @@ if __name__ == "__main__":
 
             sys.exit(app.exec_())
         else:
+            icon_spc = QtGui.QIcon()
+            icon_spc.addPixmap(
+                QtGui.QPixmap(":/ico/img/shutdown.ico"),
+                QtGui.QIcon.Normal, QtGui.QIcon.Off)
             msg_lock = QMessageBox()
+            msg_lock.setWindowIcon(icon_spc)
             msg_lock.setIcon(QMessageBox.Warning)
             msg_lock.setWindowTitle("Ошибка")
             msg_lock.setText("Программа уже запущена.")
