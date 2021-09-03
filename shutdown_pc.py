@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import QMessageBox
 
 from py.main import Ui_MainWindow
 
-VERSION = "v 1.1"
+VERSION = "v 1.2"
 
 
 class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
