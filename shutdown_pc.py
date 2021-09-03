@@ -459,7 +459,22 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    ShutdownPC = UiShutdownPc()
-    ShutdownPC.show()
-    sys.exit(app.exec_())
+    lock_file = None
+    try:
+        app = QtWidgets.QApplication(sys.argv)
+        lock_file = QtCore.QLockFile("shutdown_pc.lock")
+
+        if lock_file.tryLock():
+            shutdown_pc = UiShutdownPc()
+            shutdown_pc.show()
+
+            sys.exit(app.exec_())
+        else:
+            msg_lock = QMessageBox()
+            msg_lock.setIcon(QMessageBox.Warning)
+            msg_lock.setWindowTitle("Ошибка")
+            msg_lock.setText("Программа уже запущена.")
+            msg_lock.setStandardButtons(QMessageBox.Ok)
+            msg_lock.exec_()
+    finally:
+        lock_file.unlock()
