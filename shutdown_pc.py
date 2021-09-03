@@ -67,6 +67,11 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton_4.clicked.connect(self.stop_timer_by_time)
         self.pushButton_6.clicked.connect(self.start_timer_by_date)
         self.pushButton_7.clicked.connect(self.stop_timer_by_date)
+        self.pushButton_8.clicked.connect(self.close)
+        self.pushButton_9.clicked.connect(
+            lambda: self.stackedWidget.setCurrentIndex(0))
+        self.pushButton_10.clicked.connect(
+            lambda: self.stackedWidget.setCurrentIndex(0))
         self.btn_close.clicked.connect(self.close)
         self.btn_minimize.clicked.connect(self.showMinimized)
 
@@ -182,6 +187,15 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
         self.timer_by_time.start(1000)
         self.shutdown_timer = self.dateEdit_2.time().addSecs(
             self.spinBox.value() * 60)
+        self.pushButton_9.setEnabled(False)
+        self.pushButton_9.setStyleSheet(
+            "QPushButton {\n"
+            "color: rgb(105, 105, 105);\n"
+            "background-color: rgb(10, 10, 10);\n"
+            "}\n"
+            "QPushButton:hover {\n"
+            "background-color: rgba(50, 50, 50, 150);\n"
+            "}")
 
     def stop_timer_by_time(self):
         """
@@ -220,6 +234,15 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
         self.spinBox.show()
         self.checkBox.show()
         self.label_2.setText("Выключить через")
+        self.pushButton_9.setEnabled(True)
+        self.pushButton_9.setStyleSheet(
+            "QPushButton {\n"
+            "color: rgb(220, 220, 220);\n"
+            "background-color: rgb(10, 10, 10);\n"
+            "}\n"
+            "QPushButton:hover {\n"
+            "background-color: rgba(50, 50, 50, 150);\n"
+            "}")
 
     def start_timer_by_date(self):
         """
@@ -230,6 +253,15 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton_7.setEnabled(True)
         self.checkBox_2.setEnabled(False)
         self.dateTimeEdit.setEnabled(False)
+        self.pushButton_10.setEnabled(False)
+        self.pushButton_10.setStyleSheet(
+            "QPushButton {\n"
+            "color: rgb(105, 105, 105);\n"
+            "background-color: rgb(10, 10, 10);\n"
+            "}\n"
+            "QPushButton:hover {\n"
+            "background-color: rgba(50, 50, 50, 150);\n"
+            "}")
         self.frame_10.hide()
         self.frame_11.show()
         self.label_8.show()
@@ -277,6 +309,15 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton_7.setEnabled(False)
         self.checkBox_2.setEnabled(True)
         self.dateTimeEdit.setEnabled(True)
+        self.pushButton_10.setEnabled(True)
+        self.pushButton_10.setStyleSheet(
+            "QPushButton {\n"
+            "color: rgb(220, 220, 220);\n"
+            "background-color: rgb(10, 10, 10);\n"
+            "}\n"
+            "QPushButton:hover {\n"
+            "background-color: rgba(50, 50, 50, 150);\n"
+            "}")
         self.checkBox_2.show()
         self.frame_10.show()
         self.frame_11.hide()
