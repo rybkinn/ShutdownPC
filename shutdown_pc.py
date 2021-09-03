@@ -123,8 +123,13 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
                             self.checkBox_2.hide()
                             self.dateTimeEdit.setDate(self.TaskDate)
                             self.dateTimeEdit.setTime(self.TaskTime)
-            except subprocess.CalledProcessError:
-                pass
+            except subprocess.CalledProcessError as error:
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Critical)
+                msg.setWindowTitle("Ошибка с планировщиком задач.")
+                msg.setText("Нету задачи в планировщике windows.")
+                msg.setInformativeText(error)
+                msg.exec_()
 
     def start_timer_by_time(self):
         """
@@ -151,13 +156,17 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE)
             elif self.run_system == 'Linux':
+                # (Linux) старт выключения ПК по времени с добавлением в систему
+                # os.system(f' echo {sudo_passwd} |
+                # sudo -S shutdown -h -S +{self.spinBox.value()}')
                 try:
                     os.system(f'shutdown -h +{self.spinBox.value()}')
-                except:
+                except PermissionError as error:
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Critical)
                     msg.setWindowTitle("Ошибка с root правами")
                     msg.setText("Недостаточно прав на выполнение операции")
+                    msg.setInformativeText(error)
                     msg.exec_()
             self.label_4.setText("Можно закрыть программу")
         else:
@@ -189,13 +198,15 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
                              stderr=subprocess.PIPE)
         elif self.run_system == 'Linux' and self.checkBox.isChecked() or \
                 self.run_system == 'Linux' and self.old_task:
+            # (Linux) удаление выключения ПК по времени с добавлением в систему
             try:
                 os.system('shutdown -c')
-            except:
+            except PermissionError as error:
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Critical)
                 msg.setWindowTitle("Ошибка с root правами")
                 msg.setText("Недостаточно прав на выполнение операции")
+                msg.setInformativeText(error)
                 msg.exec_()
         self.checkBox.setEnabled(True)
         self.current_time_sec = 0
@@ -239,16 +250,18 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE)
             elif self.run_system == 'Linux':
+                # (Linux) выключение ПК по дате с добавлением в систему
                 __now_datetime = datetime.datetime.now()
                 __diff_minutes = (self.dateTimeEdit.dateTime().toPyDateTime() -
                                   __now_datetime).total_seconds() / 60.0
                 try:
                     os.system(f'shutdown -h +{int(__diff_minutes)}')
-                except:
+                except PermissionError as error:
                     msg = QMessageBox()
                     msg.setIcon(QMessageBox.Critical)
                     msg.setWindowTitle("Ошибка с root правами")
                     msg.setText("Недостаточно прав на выполнение операции")
+                    msg.setInformativeText(error)
                     msg.exec_()
         else:
             self.label_8.setText("Можно свернуть программу")
@@ -285,16 +298,18 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
         elif self.run_system == 'Linux' and self.checkBox_2.isChecked() or \
                 self.run_system == 'Linux' and self.old_task:
             self.old_task = False
+            # (Linux) удаление выключение ПК по дате с добавлением в систему
             sec = 60 - QtCore.QDateTime.currentDateTime().time().second()
             self.dateTimeEdit.setDateTime(
                 QtCore.QDateTime.currentDateTime().addSecs(sec))
             try:
                 os.system('shutdown -c')
-            except:
+            except PermissionError as error:
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Critical)
                 msg.setWindowTitle("Ошибка с root правами")
                 msg.setText("Недостаточно прав на выполнение операции")
+                msg.setInformativeText(error)
                 msg.exec_()
 
     def timer_operation_by_time(self):
@@ -324,13 +339,15 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
                         stderr=subprocess.PIPE)
                 elif not self.checkBox.isChecked() and \
                         self.run_system == 'Linux':
+                    # (Linux) выключение ПК по истечению таймера (на время)
                     try:
                         os.system('shutdown now')
-                    except:
+                    except PermissionError as error:
                         msg = QMessageBox()
                         msg.setIcon(QMessageBox.Critical)
                         msg.setWindowTitle("Ошибка с root правами")
                         msg.setText("Недостаточно прав на выполнение операции")
+                        msg.setInformativeText(error)
                         msg.exec_()
 
     def timer_operation_by_date(self):
@@ -347,13 +364,15 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
         elif QtCore.QDateTime.currentDateTime() >= \
                 self.dateTimeEdit.dateTime() and self.run_system == 'Linux':
             self.timer_by_date.stop()
+            # (Linux) выключение ПК по истечению таймера (на время)
             try:
                 os.system('shutdown now')
-            except:
+            except PermissionError as error:
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Critical)
                 msg.setWindowTitle("Ошибка с root правами")
                 msg.setText("Недостаточно прав на выполнение операции")
+                msg.setInformativeText(error)
                 msg.exec_()
 
     def display_time(self):
