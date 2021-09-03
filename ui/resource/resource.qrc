@@ -5,6 +5,9 @@
     <file>img/play.png</file>
     <file>img/stop.png</file>
   </qresource>
+  <qresource prefix="ico">
+    <file>img/shutdown.ico</file>
+  </qresource>
   <qresource prefix="fonts">
     <file>fonts/a_LCDNova.ttf</file>
   </qresource>
