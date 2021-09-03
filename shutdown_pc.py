@@ -20,17 +20,15 @@ class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
         super().__init__()
         QtGui.QFontDatabase.addApplicationFont(
             "ui/resource/fonts/a_LCDNova.ttf")
-
         self.icon_msg = QtGui.QIcon()
         self.icon_msg.addPixmap(
             QtGui.QPixmap(":/ico/img/shutdown.ico"),
             QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.setWindowIcon(self.icon_msg)
 
         self.setupUi(self)
         self.dragPos = QtCore.QPoint()
-
         self.label_bottom_2.setText(VERSION)
-
         self.run_system = platform.system()
         if self.run_system == 'Linux':
             self.checkBox.setText('Записать в систему')
