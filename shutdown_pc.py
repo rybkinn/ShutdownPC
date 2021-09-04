@@ -18,12 +18,10 @@ VERSION = "v 1.2.1"
 class UiShutdownPc(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        QtGui.QFontDatabase.addApplicationFont(
-            "ui/resource/fonts/a_LCDNova.ttf")
+        QtGui.QFontDatabase.addApplicationFont(":/fonts/fonts/a_LCDNova.ttf")
         self.icon_msg = QtGui.QIcon()
-        self.icon_msg.addPixmap(
-            QtGui.QPixmap(":/ico/img/shutdown.ico"),
-            QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.icon_msg.addPixmap(QtGui.QPixmap(":/ico/img/shutdown.ico"),
+                                QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.setWindowIcon(self.icon_msg)
 
         self.setupUi(self)
