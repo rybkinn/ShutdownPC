@@ -4,8 +4,8 @@
 * По дате: устанавливаете когда ПК выключится (число, месяц, год, часы, минуты).
   
 
-  Если поставить галочку "добавить в планировщик", то программу можно закрывать.
- Создается задача на выключение в планировщике windows.
+  Если поставить галочку "добавить в планировщик", то программу можно закрывать. 
+  Для Windows - создается задача на выключение в планировщике windows.
 
 ___
 
@@ -14,13 +14,20 @@ ___
 
 **Windows**
 
-- Скачать `ShutdownPC.exe` файл и запустить его. \[[Download](https://github.com/developer-rni/ShutdownPC/raw/master/ShutdownPC.exe "ShutdownPC.exe")\]
+- Скачать `shutdown_pc.exe` файл и запустить его. \[[Download](https://github.com/rybkinn/ShutdownPC/raw/master/shutdown_pc.exe "shutdown_pc.exe")\]
 ###### или  
-- `git clone https://github.com/developer-rni/ShutdownPC.git`
-  - (можно скачать архив \[[Download](https://github.com/developer-rni/ShutdownPC/archive/master.zip "ShutdownPC-master.zip")\])
+- `git clone https://github.com/rybkinn/ShutdownPC.git`
+  - (можно скачать архив \[[Download](https://github.com/rybkinn/ShutdownPC/archive/master.zip "ShutdownPC-master.zip")\])
 
-- Запустить файл `ShutdownPC.exe`
+- Запустить файл `shutdown_pc.exe`
 
+**Linux**
+
+- `git clone https://github.com/rybkinn/ShutdownPC.git`
+  - (или нажать на "Code" => Download ZIP и распаковать архив)
+
+- Установить зависимости командой `pip install -r requirements.txt`
+- Запустить файл `shutdown_pc.py` (сделать исполняемым `chmod u+x shutdown_pc.py`)
 ___
 
 ## Программа создана с помощью
